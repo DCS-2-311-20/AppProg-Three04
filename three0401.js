@@ -23,7 +23,7 @@ function init() {
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.setClearColor( 0x406080 );
-  renderer.shadowMap.enabled = true;
+  // ここに影の投影のためのコードを入れる
   document.getElementById("WebGL-output")
     .appendChild(renderer.domElement);
 
@@ -45,7 +45,6 @@ function init() {
     new THREE.CircleGeometry(20,24),
     new THREE.MeshBasicMaterial({color:0x006010}));
   circle.rotation.x = -Math.PI/2;
-  circle.receiveShadow = true;
   scene.add(circle);
 
   // 光源の作成
