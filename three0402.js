@@ -1,5 +1,5 @@
 //
-// 応用プログラミング 課題6.1
+// 応用プログラミング 課題6.2 G084002020 拓殖太郎
 // $Id$
 //
 "use strict"; // 厳格モード
@@ -28,7 +28,7 @@ function init() {
   document.getElementById("WebGL-output")
     .appendChild(renderer.domElement);
 
-  // テクスチャの読み込み
+  // テクスチャの読み込み. まずは，moonTester.jpgをビットマップとして使うこと
   /* 自分で考えよう */
 
   // 正20面体の作成
@@ -44,39 +44,41 @@ function init() {
   const dx = 0.089;
   const dy = 0.219;
   //   UVマッピングのための関数
+  const uvs = geometry.getAttribute("uv");
   function setUvs(f, x, y) {
+    f = f * 6;
     switch (y) {
     case 0: /* 自分で考えよう */
-      geometry.faceVertexUvs[0][f][0].x = x0;
-      geometry.faceVertexUvs[0][f][0].y = y0;
-      geometry.faceVertexUvs[0][f][1].x = x0;
-      geometry.faceVertexUvs[0][f][1].y = y0;
-      geometry.faceVertexUvs[0][f][2].x = x0;
-      geometry.faceVertexUvs[0][f][2].y = y0;
+      uvs.array[f]   = x0;
+      uvs.array[f+1] = y0;
+      uvs.array[f+2] = x0;
+      uvs.array[f+3] = y0;
+      uvs.array[f+4] = x0;
+      uvs.array[f+5] = y0;
       break;
     case 1: /* 自分で考えよう */
-      geometry.faceVertexUvs[0][f][0].x = x0;
-      geometry.faceVertexUvs[0][f][0].y = y0;
-      geometry.faceVertexUvs[0][f][1].x = x0;
-      geometry.faceVertexUvs[0][f][1].y = y0;
-      geometry.faceVertexUvs[0][f][2].x = x0;
-      geometry.faceVertexUvs[0][f][2].y = y0;
+      uvs.array[f]   = x0;
+      uvs.array[f+1] = y0;
+      uvs.array[f+2] = x0;
+      uvs.array[f+3] = y0;
+      uvs.array[f+4] = x0;
+      uvs.array[f+5] = y0;
       break;
     case 2:
-      geometry.faceVertexUvs[0][f][0].x = x0 + dx * (x + 2);
-      geometry.faceVertexUvs[0][f][0].y = y0 - dy * 2;
-      geometry.faceVertexUvs[0][f][1].x = x0 + dx * (x + 1);
-      geometry.faceVertexUvs[0][f][1].y = y0 - dy;
-      geometry.faceVertexUvs[0][f][2].x = x0 + dx * x;
-      geometry.faceVertexUvs[0][f][2].y = y0 - dy * 2;
+      uvs.array[f]   = x0 + dx * (x + 2);
+      uvs.array[f+1] = y0 - dy * 2;
+      uvs.array[f+2] = x0 + dx * (x + 1);
+      uvs.array[f+3] = y0 - dy;
+      uvs.array[f+4] = x0 + dx * x;
+      uvs.array[f+5] = y0 - dy * 2;
       break;
     case 3:
-      geometry.faceVertexUvs[0][f][0].x = x0 + dx * (x + 2);
-      geometry.faceVertexUvs[0][f][0].y = y0 - dy * 2;
-      geometry.faceVertexUvs[0][f][1].x = x0 + dx * x;
-      geometry.faceVertexUvs[0][f][1].y = y0 - dy * 2;
-      geometry.faceVertexUvs[0][f][2].x = x0 + dx * (x + 1);
-      geometry.faceVertexUvs[0][f][2].y = y0 - dy * 3;
+      uvs.array[f]   = x0 + dx * (x + 2);
+      uvs.array[f+1] = y0 - dy * 2;
+      uvs.array[f+2] = x0 + dx * x;
+      uvs.array[f+3] = y0 - dy * 2;
+      uvs.array[f+4] = x0 + dx * (x + 1);
+      uvs.array[f+5] = y0 - dy * 3;
       break;
     }
   }
@@ -84,6 +86,7 @@ function init() {
   setUvs( 6, 1, 1); setUvs( 5, 3, 1); setUvs( 9, 5, 1); setUvs( 8, 7, 1); setUvs( 7, 9, 1);
   setUvs(16, 0, 2); setUvs(15, 2, 2); setUvs(19, 4, 2); setUvs(18, 6, 2); setUvs(17, 8, 2);
   setUvs(11, 0, 3); setUvs(10, 2, 3); setUvs(14, 4, 3); setUvs(13, 6, 3); setUvs(12, 8, 3);
+  geometry.setAttribute("uv", uvs, 2);
   const icosahedron = new THREE.Mesh(geometry, material);
   scene.add(icosahedron);
 
@@ -96,7 +99,7 @@ function init() {
   // 座標軸の設定
   const axes = new THREE.AxesHelper(3);
   scene.add(axes);
-  axes.visible = false;
+  //axes.visible = false;
 
   // カメラの設定
   function cameraUpdate() {

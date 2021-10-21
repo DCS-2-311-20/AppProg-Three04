@@ -1,5 +1,5 @@
 //
-// 応用プログラミング 課題6.1
+// 応用プログラミング 課題6.1 G084002020 拓殖太郎
 // $Id$
 //
 "use strict"; // 厳格モード
@@ -29,11 +29,13 @@ function init() {
 
   // テクスチャの読み込み
 
+
+
   // 立方体の作成
   const cubeGeometry = new THREE.BoxGeometry(2, 2, 2);
   const cubeMaterial = new THREE.MeshNormalMaterial();
   // マテリアルにテクスチャを登録
-  
+
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cube.position.y = 2;
   scene.add(cube);
